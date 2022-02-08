@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Book from "./Book";
 import { getAll } from "./BooksAPI";
 
-const StyledHome = styled.div`
+const StyledHomePage = styled.div`
   overflow-y: auto;
   display: grid;
   justify-content: center;
@@ -21,13 +21,11 @@ const HomePage = () => {
   }, []);
 
   return (
-    <StyledHome>
-      {allBooks?.length > 0 ? (
-        allBooks.map(book => <Book key={book.id} book={book} />)
-      ) : (
-        <div className="loading" />
-      )}
-    </StyledHome>
+    <StyledHomePage>
+      {allBooks.map(book => (
+        <Book key={book.id} book={book} />
+      ))}
+    </StyledHomePage>
   );
 };
 

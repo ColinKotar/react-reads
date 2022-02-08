@@ -2,14 +2,18 @@ import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./HomePage";
 import SearchPage from "./SearchPage";
+import Navbar from "./Navbar";
 
 const StyledApp = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
   color: #333;
+
   .loading {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
 
     background-color: #eee;
     animation: load 2s linear infinite;
@@ -31,6 +35,8 @@ const StyledApp = styled.div`
 const App = () => {
   return (
     <StyledApp>
+      <Navbar />
+
       <Routes>
         <Route path="/" element={<HomePage />} />
 
