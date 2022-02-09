@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Book from "./Book";
 import { search } from "./BooksAPI";
+import BookShelf from "./BookShelf";
 
 const StyledSearchPage = styled.div`
   overflow-y: auto;
@@ -13,23 +13,16 @@ const StyledSearchPage = styled.div`
   padding: 4rem 2rem;
 `;
 
-const SearchPage = () => {
-  // search value
-  const [value, setValue] = useState("lin");
-
+const SearchPage = ({ value }) => {
   // get all books when component mounts
   const [searchedBooks, setSearchedBooks] = useState([]);
   useEffect(() => {
-    search(value).then(res => setSearchedBooks(res));
+    value && search(value).then(res => setSearchedBooks(res));
   }, [value, setSearchedBooks]);
 
   return (
     <StyledSearchPage>
-      {searchedBooks?.length > 0 ? (
-        searchedBooks.map(book => <Book key={book.id} book={book} />)
-      ) : (
-        <div className="loading" />
-      )}
+      <BookShelf books={searchedBooks} />
     </StyledSearchPage>
   );
 };

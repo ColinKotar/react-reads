@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import HomePage from "./HomePage";
 import SearchPage from "./SearchPage";
 import Navbar from "./Navbar";
+import { useState } from "react";
 
 const StyledApp = styled.div`
   height: 100vh;
@@ -11,36 +12,25 @@ const StyledApp = styled.div`
   flex-direction: column;
   color: #333;
 
-  .loading {
-    height: 100%;
-    width: 100%;
-
-    background-color: #eee;
-    animation: load 2s linear infinite;
-  }
-
-  @keyframes load {
-    0% {
-      background-color: #ccc;
-    }
-    50% {
-      background-color: #fff;
-    }
-    100% {
-      background-color: #ccc;
-    }
+  h1 {
+    margin-top: 0;
+    color: #444;
+    font-weight: 500;
   }
 `;
 
 const App = () => {
+  // search value
+  const [value, setValue] = useState("");
+
   return (
     <StyledApp>
-      <Navbar />
+      <Navbar setValue={setValue} />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
 
-        <Route path="/search" element={<SearchPage />} />
+        <Route path="/search" element={<SearchPage value={value} />} />
       </Routes>
     </StyledApp>
   );
