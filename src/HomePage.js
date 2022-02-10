@@ -1,28 +1,7 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { getAll } from "./BooksAPI";
+import React from "react";
 import BookShelf from "./BookShelf";
 
-const StyledHomePage = styled.div`
-  overflow-y: auto;
-  padding: 2rem;
-
-  .shelf {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 12rem);
-    grid-template-rows: masonry;
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-`;
-
-const HomePage = () => {
-  // get all books when component mounts
-  const [allBooks, setAllBooks] = useState([]);
-  useEffect(() => {
-    getAll().then(res => setAllBooks(res));
-  }, []);
-
+const HomePage = ({ allBooks, setAllBooks }) => {
   // book shelves (categories)
   const currentlyReading = allBooks?.filter(
     book => book.shelf === "currentlyReading"
@@ -31,17 +10,17 @@ const HomePage = () => {
   const read = allBooks?.filter(book => book.shelf === "read");
 
   return (
-    <StyledHomePage>
+    <>
       <h1>Currently Reading</h1>
 
-      <BookShelf books={currentlyReading} />
+      <BookShelf books={currentlyReading} setAllBooks={setAllBooks} />
 
       <h1>Want to Read</h1>
-      <BookShelf books={wantToRead} />
+      <BookShelf books={wantToRead} setAllBooks={setAllBooks} />
 
       <h1>Read</h1>
-      <BookShelf books={read} />
-    </StyledHomePage>
+      <BookShelf books={read} setAllBooks={setAllBooks} />
+    </>
   );
 };
 

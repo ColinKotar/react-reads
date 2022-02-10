@@ -1,18 +1,40 @@
 import React, { useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
+import { update } from "./BooksAPI";
 
-const BookDropdown = ({ onCurrentlyReading, onWantToRead, onRead }) => {
+const BookDropdown = ({ book, setAllBooks }) => {
   // dropdown state
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   // dropdown handlers
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = e => {
+    setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  // menu item handlers
+  const updateBooks = shelf => {
+    update(book, shelf);
+    let found = false;
+    setAllBooks(prev => {
+      const newBooks = prev.map(pBook => {
+        if (pBook.id === book.id) {
+          found = true;
+          return { ...pBook, shelf };
+        } else {
+          return pBook;
+        }
+      });
+      if (!found) {
+        newBooks.push({ ...book, shelf });
+      }
+      return newBooks;
+    });
+    handleClose();
   };
 
   return (
@@ -37,11 +59,26 @@ const BookDropdown = ({ onCurrentlyReading, onWantToRead, onRead }) => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Currently reading</MenuItem>
+        <MenuItem
+          onClick={() => updateBooks("currentlyReading")}
+          selected={book.shelf === "currentlyReading"}
+        >
+          Currently reading
+        </MenuItem>
 
-        <MenuItem onClick={handleClose}>Want to read</MenuItem>
+        <MenuItem
+          onClick={() => updateBooks("wantToRead")}
+          selected={book.shelf === "wantToRead"}
+        >
+          Want to read
+        </MenuItem>
 
-        <MenuItem onClick={handleClose}>Read</MenuItem>
+        <MenuItem
+          onClick={() => updateBooks("read")}
+          selected={book.shelf === "read"}
+        >
+          Read
+        </MenuItem>
 
         <MenuItem onClick={handleClose}>None</MenuItem>
       </Menu>

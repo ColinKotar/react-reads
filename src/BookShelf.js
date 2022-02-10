@@ -30,11 +30,12 @@ const StyledBook = styled.div`
     position: absolute;
     top: -12px;
     right: -12px;
-    background-color: #fff;
-    border: 1px solid #eee;
+    color: #fff;
+    background-color: #3384ff;
 
     :hover {
-      background-color: #f2f2f2;
+      background-color: #3384ff;
+      filter: brightness(0.95);
     }
   }
   button[aria-expanded="true"] {
@@ -46,24 +47,23 @@ const StyledBook = styled.div`
   }
 `;
 
-const BookShelf = ({ books }) => {
-  console.log(books);
+const BookShelf = ({ books, setAllBooks }) => {
   if (books.length <= 0) return <></>;
   return (
     <div className="shelf">
-      {books.map(({ id, imageLinks, title, authors }) => (
-        <StyledBook key={id}>
-          <img src={imageLinks.thumbnail} alt="Book cover" />
+      {books?.map(book => (
+        <StyledBook key={book?.id}>
+          <img src={book?.imageLinks.thumbnail} alt="Book cover" />
 
-          <div className="title">{title}</div>
+          <div className="title">{book?.title}</div>
 
           <div className="authors">
-            {authors.map((author, index) => (
+            {book?.authors.map((author, index) => (
               <div key={index}>{author}</div>
             ))}
           </div>
 
-          <BookDropdown />
+          <BookDropdown book={book} setAllBooks={setAllBooks} />
         </StyledBook>
       ))}
     </div>

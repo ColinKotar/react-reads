@@ -10,7 +10,8 @@ const StyledNavbar = styled.div`
   align-items: center;
 
   min-height: 3rem;
-  padding: 0 0.75rem;
+  padding: 0 10%;
+
   gap: 0.5rem;
   background-color: #3384ff;
 
@@ -34,11 +35,15 @@ const StyledNavbar = styled.div`
   }
 `;
 
-const Navbar = ({ setValue }) => {
+const Navbar = ({ setValue, setSearchedBooks }) => {
   // navigate to pages
   const navigate = useNavigate();
   const handleSearchClick = () => navigate("/search");
-  const handleHomeClick = () => navigate("/");
+  const handleHomeClick = () => {
+    navigate("/");
+    setValue("");
+    setSearchedBooks([]);
+  };
 
   // handle search input change
   const handleSearchChange = e => setValue(e.target.value);
