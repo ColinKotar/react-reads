@@ -53,12 +53,12 @@ const BookShelf = ({ books, setAllBooks }) => {
     <div className="shelf">
       {books?.map(book => (
         <StyledBook key={book?.id}>
-          <img src={book?.imageLinks.thumbnail} alt="Book cover" />
+          <img src={book?.imageLinks?.thumbnail} alt="Book cover" />
 
           <div className="title">{book?.title}</div>
 
           <div className="authors">
-            {book?.authors.map((author, index) => (
+            {book?.authors?.map((author, index) => (
               <div key={index}>{author}</div>
             ))}
           </div>
