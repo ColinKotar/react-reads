@@ -80,7 +80,12 @@ const BookDropdown = ({ book, setAllBooks }) => {
           Read
         </MenuItem>
 
-        <MenuItem onClick={handleClose}>None</MenuItem>
+        <MenuItem
+          onClick={() => updateBooks("none")}
+          selected={book.shelf === "none"}
+        >
+          None
+        </MenuItem>
       </Menu>
     </>
   );
