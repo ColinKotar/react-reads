@@ -34,29 +34,26 @@ const StyledPage = styled.div`
 `;
 
 const App = () => {
-  // search value
-  const [value, setValue] = useState("");
-
-  // books
-  const [allBooks, setAllBooks] = useState([]);
+  // app state
+  const [searchValue, setSearchValue] = useState("");
   const [searchedBooks, setSearchedBooks] = useState([]);
+  const [allBooks, setAllBooks] = useState([]);
 
-  // fetch on mount, refetch when url changes
+  // fetch all books when component mounts
   useEffect(() => getAll().then(res => setAllBooks(res)), []);
-  useEffect(
-    () =>
-      value &&
-      search(value).then(res => {
-        if (res?.error) {
-          setSearchedBooks([]);
-        } else setSearchedBooks(res);
-      }),
-    [value]
-  );
+
+  useEffect(() => {
+    search(searchValue).then(res => {
+      console.log(searchValue);
+      if (searchValue === "" || res?.error) {
+        setSearchedBooks([]);
+      } else setSearchedBooks(res);
+    });
+  }, [searchValue]);
 
   return (
     <StyledApp>
-      <Navbar setValue={setValue} setSearchedBooks={setSearchedBooks} />
+      <Navbar setSearchValue={setSearchValue} />
 
       <StyledPage>
         <Routes>
@@ -69,9 +66,11 @@ const App = () => {
             path="/search"
             element={
               <SearchPage
-                searchedBooks={searchedBooks}
                 allBooks={allBooks}
                 setAllBooks={setAllBooks}
+                setSearchValue={setSearchValue}
+                searchedBooks={searchedBooks}
+                setSearchedBooks={setSearchedBooks}
               />
             }
           />

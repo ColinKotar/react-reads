@@ -35,18 +35,11 @@ const StyledNavbar = styled.div`
   }
 `;
 
-const Navbar = ({ setValue, setSearchedBooks }) => {
+const Navbar = ({ setSearchValue }) => {
   // navigate to pages
   const navigate = useNavigate();
   const handleSearchClick = () => navigate("/search");
-  const handleHomeClick = () => {
-    navigate("/");
-    setValue("");
-    setSearchedBooks([]);
-  };
-
-  // handle search input change
-  const handleSearchChange = e => setValue(e.target.value);
+  const handleHomeClick = () => navigate("/");
 
   return (
     <StyledNavbar>
@@ -72,7 +65,7 @@ const Navbar = ({ setValue, setSearchedBooks }) => {
 
               <Input
                 placeholder="Search for books"
-                onChange={handleSearchChange}
+                onChange={e => setSearchValue(e.target.value)}
               />
             </>
           }
