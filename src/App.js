@@ -44,7 +44,13 @@ const App = () => {
   // fetch on mount, refetch when url changes
   useEffect(() => getAll().then(res => setAllBooks(res)), []);
   useEffect(
-    () => value && search(value).then(res => setSearchedBooks(res)),
+    () =>
+      value &&
+      search(value).then(res => {
+        if (res?.error) {
+          setSearchedBooks([]);
+        } else setSearchedBooks(res);
+      }),
     [value]
   );
 

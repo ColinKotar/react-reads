@@ -47,8 +47,14 @@ const StyledBook = styled.div`
   }
 `;
 
+const StyledNoBooks = styled.div`
+  color: rgb(100, 100, 100);
+  font-size: 1.25rem;
+  padding-bottom: 1.5rem;
+`;
+
 const BookShelf = ({ books, setAllBooks }) => {
-  if (books.length <= 0) return <></>;
+  if (books.length <= 0) return <StyledNoBooks>No books found.</StyledNoBooks>;
   return (
     <div className="shelf">
       {books?.map(book => (
