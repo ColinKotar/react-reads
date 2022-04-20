@@ -44,10 +44,9 @@ const App = () => {
 
   useEffect(() => {
     search(searchValue).then(res => {
-      console.log(searchValue);
-      if (searchValue === "" || res?.error) {
+      if (!res || res?.error) {
         setSearchedBooks([]);
-      } else setSearchedBooks(res);
+      } else searchValue !== "" && setSearchedBooks(res);
     });
   }, [searchValue]);
 
